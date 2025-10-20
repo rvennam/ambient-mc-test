@@ -1,3 +1,9 @@
+# Ensure CLUSTER1 and CLUSTER2 are set
+if [ -z "${CLUSTER1:-}" ] || [ -z "${CLUSTER2:-}" ]; then
+    echo "Error: CLUSTER1 and CLUSTER2 environment variables must be set." >&2
+    return 1 2>/dev/null || exit 1
+fi
+
 # Create ns
 for context in ${CLUSTER1} ${CLUSTER2}; do
     kubectl --context ${context} create namespace gloo-test || true
